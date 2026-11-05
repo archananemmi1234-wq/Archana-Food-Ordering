@@ -1,0 +1,321 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food List | Archana Foods</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #fff7fa;
+            color: #432b36;
+        }
+
+        header {
+            background: white;
+            padding: 20px 5%;
+            text-align: center;
+            box-shadow: 0 3px 15px #e8cbd5;
+        }
+
+        header h1 {
+            color: #d63384;
+            margin-bottom: 12px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #66334d;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #e84393;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            color: #c22570;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .intro {
+            text-align: center;
+            color: #765366;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        input, select {
+            padding: 12px;
+            border: 1px solid #edbfd1;
+            border-radius: 9px;
+            background: white;
+            font-size: 15px;
+            min-width: 200px;
+            max-width: 100%;
+        }
+
+        input:focus, select:focus {
+            outline: 2px solid #f4a6c8;
+        }
+
+        #foodCount {
+            text-align: center;
+            color: #9d2862;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .food-list {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .food-card {
+            background: white;
+            padding: 22px;
+            border-radius: 16px;
+            border-top: 5px solid #e84393;
+            box-shadow: 0 5px 18px #f0d5df;
+            overflow-wrap: anywhere;
+        }
+
+        .food-card h3 {
+            color: #c22570;
+            margin-bottom: 12px;
+        }
+
+        .category {
+            display: inline-block;
+            background: #ffe4ef;
+            color: #9d174d;
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .description {
+            color: #765366;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .price {
+            color: #b42369;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .empty {
+            grid-column: 1 / -1;
+            background: white;
+            padding: 25px;
+            text-align: center;
+            border-radius: 12px;
+            color: #9d2862;
+        }
+
+        footer {
+            background: #5a2942;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 45px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 800px) {
+            .food-list {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 520px) {
+            .food-list {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 23px;
+            }
+
+            input, select {
+                width: 100%;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🍽️ ARCHANA FOOD ORDERING SYSTEM</h1>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/list.html" class="active">List</a>
+        <a href="/listOne.html">ListOne</a>
+        <a href="/insert.html">Insert</a>
+        <a href="/update.html">Update</a>
+        <a href="/delete.html">Delete</a>
+    </nav>
+</header>
+
+<main class="container">
+    <h2>Our Food Menu 💗</h2>
+    <p class="intro">
+        Explore our food items. Search by name or filter by category.
+    </p>
+
+    <div class="filters">
+        <input
+            type="search"
+            id="searchInput"
+            placeholder="🔍 Search food name..."
+            aria-label="Search food name"
+        >
+
+        <select id="categoryFilter" aria-label="Filter by category">
+            <option value="All">All Categories</option>
+            <option value="Veg">Vegetarian</option>
+            <option value="Non-Veg">Non-Vegetarian</option>
+        </select>
+    </div>
+
+    <p id="foodCount" role="status">Loading food items...</p>
+
+    <div class="food-list" id="foodList"></div>
+</main>
+
+<footer>
+    <p>© 2026 ARCHANA FOOD ORDERING SYSTEM</p>
+    <p>Made with 💗 for food lovers</p>
+</footer>
+
+<script>
+    const foodList = document.getElementById("foodList");
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+    const foodCount = document.getElementById("foodCount");
+
+    let allFoods = [];
+
+    function escapeHTML(value) {
+        return String(value ?? "").replace(/[&<>"']/g, function(char) {
+            return {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            }[char];
+        });
+    }
+
+    function displayFoods() {
+        const search = searchInput.value.trim().toLowerCase();
+        const category = categoryFilter.value;
+
+        const filteredFoods = allFoods.filter(food => {
+            const name = String(food.food_name ?? "").toLowerCase();
+            const foodCategory = String(food.category ?? "");
+
+            const matchesName = name.includes(search);
+            const matchesCategory =
+                category === "All" || foodCategory === category;
+
+            return matchesName && matchesCategory;
+        });
+
+        foodCount.textContent =
+            filteredFoods.length + " food item(s) found";
+
+        if (filteredFoods.length === 0) {
+            foodList.innerHTML =
+                '<p class="empty">No food items found. Try another search or add food.</p>';
+            return;
+        }
+
+        foodList.innerHTML = filteredFoods.map(food => `
+            <article class="food-card">
+                <h3>${escapeHTML(food.food_name)}</h3>
+                <span class="category">${escapeHTML(food.category)}</span>
+                <p class="description">${
+                    escapeHTML(food.description || "Delicious food item")
+                }</p>
+                <p class="price">₹${escapeHTML(food.price)}</p>
+            </article>
+        `).join("");
+    }
+
+    async function loadFoods() {
+        foodCount.textContent = "Loading food items...";
+        foodList.replaceChildren();
+
+        try {
+            const response = await fetch("/foods");
+
+            if (!response.ok) {
+                throw new Error(await response.text());
+            }
+
+            allFoods = await response.json();
+            displayFoods();
+
+        } catch (error) {
+            foodCount.textContent = "Unable to load food items.";
+            foodList.innerHTML =
+                '<p class="empty">Could not connect to the server. Please check that Node.js and MySQL are running, then refresh this page.</p>';
+
+            console.error("Error loading foods:", error);
+        }
+    }
+
+    searchInput.addEventListener("input", displayFoods);
+    categoryFilter.addEventListener("change", displayFoods);
+
+    loadFoods();
+</script>
+
+</body>
+</html>
+```

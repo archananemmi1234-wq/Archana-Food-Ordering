@@ -1,0 +1,390 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List One Food | Archana Foods</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #fff7fa;
+            color: #432b36;
+        }
+
+        header {
+            background: white;
+            padding: 20px 5%;
+            text-align: center;
+            box-shadow: 0 3px 15px #e8cbd5;
+        }
+
+        header h1 {
+            color: #d63384;
+            margin-bottom: 14px;
+            font-size: 27px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #66334d;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #e84393;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 40px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px #e9bfd0;
+            border-top: 5px solid #e84393;
+        }
+
+        h2 {
+            text-align: center;
+            color: #c22570;
+            margin-bottom: 12px;
+        }
+
+        .intro {
+            text-align: center;
+            color: #765366;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            color: #9d2862;
+            margin-bottom: 9px;
+        }
+
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #edbfd1;
+            border-radius: 9px;
+            background: #fffafd;
+            font-size: 15px;
+            color: #432b36;
+        }
+
+        select:focus {
+            outline: 2px solid #f4a6c8;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 18px;
+            background: #d63384;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #ad2167;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        #message {
+            text-align: center;
+            margin-top: 18px;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .food-details {
+            margin-top: 25px;
+            padding: 22px;
+            background: #fff0f6;
+            border-radius: 14px;
+            border-left: 5px solid #e84393;
+        }
+
+        .food-details h3 {
+            color: #c22570;
+            margin-bottom: 18px;
+            font-size: 23px;
+            overflow-wrap: anywhere;
+        }
+
+        .detail-row {
+            padding: 12px 0;
+            border-bottom: 1px solid #f3cddd;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-row strong {
+            color: #9d2862;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 22px;
+            text-align: center;
+            color: #c22570;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background: #5a2942;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 550px) {
+            header h1 {
+                font-size: 21px;
+            }
+
+            nav {
+                gap: 12px;
+            }
+
+            .container {
+                margin: 25px 12px;
+                padding: 22px 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🍽️ ARCHANA FOOD ORDERING SYSTEM</h1>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/list.html">List</a>
+        <a href="/listOne.html" class="active">ListOne</a>
+        <a href="/insert.html">Insert</a>
+        <a href="/update.html">Update</a>
+        <a href="/delete.html">Delete</a>
+    </nav>
+</header>
+
+<main class="container">
+    <h2>🔎 Search One Food Item</h2>
+
+    <p class="intro">
+        Select a food item to view its complete details.
+    </p>
+
+    <label for="foodId">Select Food Item</label>
+
+    <select id="foodId">
+        <option value="">-- Select Food Item --</option>
+    </select>
+
+    <button type="button" id="searchButton">View Food Details</button>
+
+    <p id="message" role="status" aria-live="polite"></p>
+
+    <section id="foodDetails" class="food-details" hidden>
+        <h3 id="detailName"></h3>
+
+        <div class="detail-row">
+            <strong>Food ID:</strong>
+            <span id="detailId"></span>
+        </div>
+
+        <div class="detail-row">
+            <strong>Category:</strong>
+            <span id="detailCategory"></span>
+        </div>
+
+        <div class="detail-row">
+            <strong>Price:</strong>
+            <span id="detailPrice"></span>
+        </div>
+
+        <div class="detail-row">
+            <strong>Description:</strong>
+            <span id="detailDescription"></span>
+        </div>
+
+        <div class="detail-row">
+            <strong>Availability:</strong>
+            <span id="detailAvailable"></span>
+        </div>
+    </section>
+
+    <a class="back-link" href="/list.html">← View All Food Items</a>
+</main>
+
+<footer>
+    <p>© 2026 ARCHANA FOOD ORDERING SYSTEM</p>
+    <p>Made with 💗 for food lovers</p>
+</footer>
+
+<script>
+    const foodId = document.getElementById("foodId");
+    const searchButton = document.getElementById("searchButton");
+    const message = document.getElementById("message");
+    const foodDetails = document.getElementById("foodDetails");
+
+    function setMessage(text, color = "#9d2862") {
+        message.textContent = text;
+        message.style.color = color;
+    }
+
+    async function loadFoods() {
+        searchButton.disabled = true;
+        setMessage("Loading food items...");
+
+        try {
+            const response = await fetch("/foods");
+
+            if (!response.ok) {
+                throw new Error(await response.text());
+            }
+
+            const foods = await response.json();
+
+            foodId.replaceChildren();
+
+            const firstOption = document.createElement("option");
+            firstOption.value = "";
+            firstOption.textContent = "-- Select Food Item --";
+            foodId.appendChild(firstOption);
+
+            foods.forEach(food => {
+                const option = document.createElement("option");
+                option.value = food.food_id;
+                option.textContent =
+                    food.food_id + " - " + food.food_name;
+
+                foodId.appendChild(option);
+            });
+
+            setMessage(
+                foods.length
+                    ? foods.length + " food item(s) loaded."
+                    : "No food items available. Please insert a food item."
+            );
+
+        } catch (error) {
+            setMessage(
+                "Unable to load foods. Check the server and database.",
+                "#dc2626"
+            );
+            console.error(error);
+        } finally {
+            searchButton.disabled = false;
+        }
+    }
+
+    async function searchFood() {
+        const id = foodId.value;
+
+        foodDetails.hidden = true;
+
+        if (!id) {
+            setMessage("Please select a food item first.");
+            return;
+        }
+
+        searchButton.disabled = true;
+        setMessage("Loading food details...");
+
+        try {
+            const response = await fetch(
+                "/foods/" + encodeURIComponent(id)
+            );
+
+            if (!response.ok) {
+                throw new Error(await response.text());
+            }
+
+            const food = await response.json();
+
+            document.getElementById("detailName").textContent =
+                food.food_name ?? "";
+
+            document.getElementById("detailId").textContent =
+                food.food_id ?? "";
+
+            document.getElementById("detailCategory").textContent =
+                food.category ?? "";
+
+            document.getElementById("detailPrice").textContent =
+                "₹" + (food.price ?? "0");
+
+            document.getElementById("detailDescription").textContent =
+                food.description || "No description available";
+
+            document.getElementById("detailAvailable").textContent =
+                Number(food.available) === 1 ? "Available" : "Not Available";
+
+            foodDetails.hidden = false;
+            setMessage("Food details loaded successfully.", "green");
+
+        } catch (error) {
+            setMessage(
+                "Unable to load food details: " + error.message,
+                "#dc2626"
+            );
+        } finally {
+            searchButton.disabled = false;
+        }
+    }
+
+    foodId.addEventListener("change", () => {
+        foodDetails.hidden = true;
+        message.textContent = "";
+    });
+
+    searchButton.addEventListener("click", searchFood);
+
+    loadFoods();
+</script>
+
+</body>
+</html>
+```

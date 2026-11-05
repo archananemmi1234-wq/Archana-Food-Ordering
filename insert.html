@@ -1,0 +1,322 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insert Food | Archana Foods</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #fff7fa;
+            color: #432b36;
+        }
+
+        header {
+            background: white;
+            padding: 20px 5%;
+            text-align: center;
+            box-shadow: 0 3px 15px #e8cbd5;
+        }
+
+        header h1 {
+            color: #d63384;
+            margin-bottom: 14px;
+            font-size: 27px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #66334d;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #e84393;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 38px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px #e9bfd0;
+            border-top: 5px solid #e84393;
+        }
+
+        h2 {
+            text-align: center;
+            color: #c22570;
+            margin-bottom: 12px;
+        }
+
+        .intro {
+            text-align: center;
+            color: #765366;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #9d2862;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #edbfd1;
+            border-radius: 9px;
+            background: #fffafd;
+            color: #432b36;
+            font-size: 15px;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: 2px solid #f4a6c8;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .hint {
+            color: #765366;
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 25px;
+            background: #d63384;
+            color: white;
+            border: none;
+            border-radius: 9px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #ad2167;
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #message {
+            margin-top: 20px;
+            text-align: center;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #c22570;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background: #5a2942;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 550px) {
+            header h1 {
+                font-size: 21px;
+            }
+
+            nav {
+                gap: 12px;
+            }
+
+            .container {
+                margin: 25px 12px;
+                padding: 22px 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🍽️ ARCHANA FOOD ORDERING SYSTEM</h1>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/list.html">List</a>
+        <a href="/listOne.html">ListOne</a>
+        <a href="/insert.html" class="active">Insert</a>
+        <a href="/update.html">Update</a>
+        <a href="/delete.html">Delete</a>
+    </nav>
+</header>
+
+<main class="container">
+    <h2>➕ Add New Food Item</h2>
+
+    <p class="intro">
+        Add a delicious food item to the Archana Foods menu. 💗
+    </p>
+
+    <form id="foodForm">
+        <label for="food_name">Food Name *</label>
+        <input
+            type="text"
+            id="food_name"
+            name="food_name"
+            placeholder="Example: Veg Biryani"
+            maxlength="100"
+            required
+        >
+
+        <label for="category">Food Category *</label>
+        <select id="category" name="category" required>
+            <option value="">-- Select Category --</option>
+            <option value="Veg">Vegetarian</option>
+            <option value="Non-Veg">Non-Vegetarian</option>
+        </select>
+
+        <label for="price">Price (₹) *</label>
+        <input
+            type="number"
+            id="price"
+            name="price"
+            placeholder="Enter price"
+            min="0.01"
+            step="0.01"
+            required
+        >
+
+        <label for="description">Description</label>
+        <textarea
+            id="description"
+            name="description"
+            rows="4"
+            maxlength="500"
+            placeholder="Enter food description (optional)"
+        ></textarea>
+        <p class="hint">Maximum 500 characters.</p>
+
+        <button type="submit" id="submitButton">
+            💗 Add Food Item
+        </button>
+    </form>
+
+    <p id="message" role="status" aria-live="polite"></p>
+
+    <a class="back-link" href="/list.html">
+        View All Food Items →
+    </a>
+</main>
+
+<footer>
+    <p>© 2026 ARCHANA FOOD ORDERING SYSTEM</p>
+    <p>Made with 💗 for food lovers</p>
+</footer>
+
+<script>
+    const foodForm = document.getElementById("foodForm");
+    const message = document.getElementById("message");
+    const submitButton = document.getElementById("submitButton");
+
+    foodForm.addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const foodData = {
+            food_name: document.getElementById("food_name").value.trim(),
+            category: document.getElementById("category").value,
+            price: document.getElementById("price").value,
+            description: document.getElementById("description").value.trim()
+        };
+
+        if (!foodData.food_name || !foodData.category || foodData.price === "") {
+            message.textContent = "Please fill all required fields.";
+            message.style.color = "#dc2626";
+            return;
+        }
+
+        if (!Number.isFinite(Number(foodData.price)) ||
+            Number(foodData.price) <= 0) {
+            message.textContent = "Please enter a valid price greater than zero.";
+            message.style.color = "#dc2626";
+            return;
+        }
+
+        submitButton.disabled = true;
+        submitButton.textContent = "Adding Food...";
+        message.textContent = "Please wait...";
+
+        try {
+            const response = await fetch("/foods", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(foodData)
+            });
+
+            const result = await response.text();
+
+            if (!response.ok) {
+                throw new Error(result);
+            }
+
+            message.textContent = result;
+            message.style.color = "green";
+
+            foodForm.reset();
+
+        } catch (error) {
+            message.textContent = "Insert failed: " + error.message;
+            message.style.color = "#dc2626";
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = "💗 Add Food Item";
+        }
+    });
+</script>
+
+</body>
+</html>
+```

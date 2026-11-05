@@ -1,0 +1,590 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ARCHANA FOOD ORDERING SYSTEM</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #fff7fa;
+            color: #432b36;
+        }
+
+        /* HEADER */
+
+        header {
+            background: white;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 18px;
+            box-shadow: 0 3px 15px #e8cbd5;
+        }
+
+        .logo {
+            color: #d63384;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #66334d;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #e84393;
+        }
+
+        /* BUTTONS */
+
+        .btn,
+        .gallery-button {
+            display: inline-block;
+            padding: 13px 24px;
+            border-radius: 25px;
+            background: #d63384;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 5px 5px 5px 0;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn:hover,
+        .gallery-button:hover {
+            background: #ad2167;
+            transform: translateY(-2px);
+        }
+
+        /* HOME SECTION */
+
+        .hero {
+            padding: 55px 7%;
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            align-items: center;
+            gap: 35px;
+            background: linear-gradient(135deg, #fff0f5, #ffffff);
+        }
+
+        .hero-text h1 {
+            color: #c22570;
+            font-size: clamp(30px, 4vw, 48px);
+            line-height: 1.2;
+            margin-bottom: 18px;
+        }
+
+        .hero-text p {
+            color: #765366;
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        /* HOME FOOD COLLAGE */
+
+        .food-collage {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 180px 180px;
+            gap: 12px;
+            padding: 12px;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 12px 35px #e9bfd0;
+        }
+
+        .food-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 17px;
+        }
+
+        .food-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s;
+        }
+
+        .food-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .food-card span {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 12px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            background: linear-gradient(transparent, #30121ddd);
+        }
+
+        /* FOOD GALLERY - HIDDEN INITIALLY */
+
+        .gallery-section {
+            display: none;
+            padding: 40px 7% 50px;
+            text-align: center;
+            background: #fff7fa;
+        }
+
+        .gallery-section.show-gallery {
+            display: block;
+        }
+
+        .gallery-section h2 {
+            color: #c22570;
+            font-size: 30px;
+            margin: 15px 0 12px;
+        }
+
+        .gallery-intro {
+            color: #765366;
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 5px 18px #ead0da;
+            transition: transform 0.3s;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-card h3 {
+            color: #c22570;
+            margin: 15px 10px 8px;
+        }
+
+        .gallery-card p {
+            color: #765366;
+            padding: 0 12px 20px;
+            line-height: 1.5;
+        }
+
+        .close-gallery {
+            margin-bottom: 20px;
+        }
+
+        .gallery-button {
+            margin-top: 30px;
+            border-radius: 9px;
+        }
+
+        /* FEATURES */
+
+        .section {
+            padding: 45px 7%;
+            text-align: center;
+        }
+
+        .section h2 {
+            color: #c22570;
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        .section > p {
+            color: #765366;
+            line-height: 1.7;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 28px;
+        }
+
+        .feature {
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 5px 18px #f0d5df;
+        }
+
+        .feature h3 {
+            color: #d63384;
+            margin: 12px 0;
+        }
+
+        .feature p {
+            color: #765366;
+            line-height: 1.7;
+        }
+
+        .emoji {
+            font-size: 35px;
+        }
+
+        /* ADMIN OPERATIONS */
+
+        .admin {
+            background: #ffe8f0;
+            padding: 35px 7%;
+            text-align: center;
+        }
+
+        .admin h2 {
+            color: #c22570;
+            margin-bottom: 20px;
+        }
+
+        .admin p {
+            color: #765366;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #5a2942;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        /* RESPONSIVE DESIGN */
+
+        @media (max-width: 900px) {
+            header {
+                justify-content: center;
+            }
+
+            nav {
+                justify-content: center;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 35px 5%;
+            }
+
+            .food-collage {
+                grid-template-rows: 160px 160px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 19px;
+                text-align: center;
+            }
+
+            nav {
+                gap: 12px;
+            }
+
+            .food-collage {
+                gap: 8px;
+                padding: 8px;
+                grid-template-rows: 125px 125px;
+            }
+
+            .food-card span {
+                padding: 7px;
+                font-size: 11px;
+            }
+
+            .section h2,
+            .gallery-section h2 {
+                font-size: 25px;
+            }
+
+            .gallery-container {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-card img {
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">🍽️ ARCHANA FOODS</div>
+
+        <nav>
+            <a href="/" class="active">Home</a>
+            <a href="/list.html">List</a>
+            <a href="/listOne.html">ListOne</a>
+            <a href="/insert.html">Insert</a>
+            <a href="/update.html">Update</a>
+            <a href="/delete.html">Delete</a>
+        </nav>
+    </header>
+
+    <!-- HOME SECTION -->
+    <section class="hero" id="home">
+
+        <div class="hero-text">
+            <h1>ARCHANA FOOD ORDERING SYSTEM</h1>
+
+            <p>
+                Delicious food, beautiful moments! 💗
+                Explore our tasty vegetarian and non-vegetarian dishes.
+                Your favourite food is just a click away.
+            </p>
+
+            <a href="/list.html" class="btn">🍴 Explore Menu</a>
+
+            <button
+                type="button"
+                class="btn"
+                onclick="openGallery()">
+                🖼️ View Food Gallery
+            </button>
+        </div>
+
+        <div class="food-collage">
+
+            <div class="food-card">
+                <img
+                    src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=700&q=85"
+                    alt="Vegetarian salad">
+                <span>🥗 Vegetarian Specials</span>
+            </div>
+
+            <div class="food-card">
+                <img
+                    src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=700&q=85"
+                    alt="Indian curry">
+                <span>🍛 Indian Curries</span>
+            </div>
+
+            <div class="food-card">
+                <img
+                    src="https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=700&q=85"
+                    alt="Chicken Biryani"
+                    onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=700&q=85';">
+                <span>🍗 Chicken Biryani</span>
+            </div>
+
+            <div class="food-card">
+                <img
+                    src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=700&q=85"
+                    alt="Delicious food">
+                <span>😋 Delicious Meals</span>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- VIEW FOOD GALLERY -->
+    <section class="gallery-section" id="gallery">
+
+        <button
+            type="button"
+            class="btn close-gallery"
+            onclick="closeGallery()">
+            ✖ Close Gallery
+        </button>
+
+        <h2>🍽️ View Food Gallery</h2>
+
+        <p class="gallery-intro">
+            Explore our delicious vegetarian and non-vegetarian food collection!
+        </p>
+
+        <div class="gallery-container">
+
+            <div class="gallery-card">
+                <img
+                    src="https://images.unsplash.com/photo-1599043513900-ed6fe01d3833?auto=format&fit=crop&w=600&q=80"
+                    alt="Veg Biryani"
+                    loading="lazy">
+                <h3>🥦 Veg Biryani</h3>
+                <p>Fresh and delicious vegetarian biryani.</p>
+            </div>
+
+            <div class="gallery-card">
+                <img
+                    src="https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=600&q=80"
+                    alt="Chicken Biryani"
+                    loading="lazy"
+                    onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=600&q=80';">
+                <h3>🍗 Chicken Biryani</h3>
+                <p>Flavourful biryani for non-veg lovers.</p>
+            </div>
+
+            <div class="gallery-card">
+                <img
+                    src="https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=600&q=80"
+                    alt="Masala Dosa"
+                    loading="lazy">
+                <h3>🥞 Masala Dosa</h3>
+                <p>Crispy dosa served with delicious chutney.</p>
+            </div>
+
+            <div class="gallery-card">
+                <img
+                    src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80"
+                    alt="Pizza"
+                    loading="lazy">
+                <h3>🍕 Pizza</h3>
+                <p>Cheesy pizza with tasty toppings.</p>
+            </div>
+
+            <div class="gallery-card">
+                <img
+                    src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80"
+                    alt="Burger"
+                    loading="lazy">
+                <h3>🍔 Burger</h3>
+                <p>A delicious burger for food lovers.</p>
+            </div>
+
+            <div class="gallery-card">
+                <img
+                    src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80"
+                    alt="Chocolate Cake"
+                    loading="lazy">
+                <h3>🍰 Chocolate Cake</h3>
+                <p>A sweet treat to complete your meal.</p>
+            </div>
+
+        </div>
+
+        <a href="/list.html" class="gallery-button">
+            View All Food Items →
+        </a>
+
+    </section>
+
+    <!-- FEATURES -->
+    <section class="section">
+
+        <h2>Why Choose Archana Foods? 💕</h2>
+        <p>Good food makes every moment special.</p>
+
+        <div class="features">
+
+            <div class="feature">
+                <div class="emoji">🥦</div>
+                <h3>Fresh Food</h3>
+                <p>Enjoy delicious food made with fresh ingredients.</p>
+            </div>
+
+            <div class="feature">
+                <div class="emoji">🍗</div>
+                <h3>Veg &amp; Non-Veg</h3>
+                <p>Choose from a variety of vegetarian and non-vegetarian dishes.</p>
+            </div>
+
+            <div class="feature">
+                <div class="emoji">💗</div>
+                <h3>Made With Love</h3>
+                <p>A beautiful food experience for everyone.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ADMIN OPERATIONS -->
+    <section class="admin">
+
+        <h2>Admin Operations</h2>
+        <p>Manage your food items using these operations.</p>
+
+        <a href="/list.html" class="btn">View List</a>
+        <a href="/listOne.html" class="btn">Search Food</a>
+        <a href="/insert.html" class="btn">Insert Food</a>
+        <a href="/update.html" class="btn">Update Food</a>
+        <a href="/delete.html" class="btn">Delete Food</a>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 ARCHANA FOOD ORDERING SYSTEM</p>
+        <p>Made with 💗 for food lovers</p>
+    </footer>
+
+    <!-- GALLERY JAVASCRIPT -->
+    <script>
+        function openGallery() {
+            const gallery = document.getElementById("gallery");
+
+            gallery.classList.add("show-gallery");
+
+            gallery.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+
+        function closeGallery() {
+            const gallery = document.getElementById("gallery");
+
+            gallery.classList.remove("show-gallery");
+
+            document.getElementById("home").scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+    </script>
+
+</body>
+</html>
+```

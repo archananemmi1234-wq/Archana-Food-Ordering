@@ -1,0 +1,495 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Food | Archana Foods</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #fff7fa;
+            color: #432b36;
+        }
+
+        header {
+            background: white;
+            padding: 22px 5%;
+            text-align: center;
+            box-shadow: 0 3px 15px #e8cbd5;
+        }
+
+        header h1 {
+            color: #d63384;
+            margin-bottom: 15px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #66334d;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #e84393;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 35px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px #e9bfd0;
+            border-top: 5px solid #e84393;
+        }
+
+        h2 {
+            text-align: center;
+            color: #c22570;
+            margin-bottom: 15px;
+        }
+
+        .intro {
+            text-align: center;
+            line-height: 1.6;
+            color: #765366;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #9d2862;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #edbfd1;
+            border-radius: 8px;
+            background: #fffafd;
+            color: #432b36;
+            font-size: 15px;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: 2px solid #f4a6c8;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 18px;
+            background: #d63384;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #ad2167;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .status {
+            margin-top: 15px;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 22px;
+            color: #c22570;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #5a2942;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            line-height: 1.7;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        @media (max-width: 550px) {
+            header h1 {
+                font-size: 21px;
+            }
+
+            nav {
+                gap: 12px;
+            }
+
+            .container {
+                margin: 25px 12px;
+                padding: 22px 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🍽️ ARCHANA FOOD ORDERING SYSTEM</h1>
+
+    <nav>
+        <a href="/">Home</a>
+        <a href="/list.html">List</a>
+        <a href="/listOne.html">ListOne</a>
+        <a href="/insert.html">Insert</a>
+        <a href="/update.html" class="active">Update</a>
+        <a href="/delete.html">Delete</a>
+    </nav>
+</header>
+
+<main class="container">
+    <h2>✏️ Update Food Details</h2>
+
+    <p class="intro">
+        Select a food item, load its details, make changes, and update it.
+    </p>
+
+    <label for="foodId">Select Food Item *</label>
+    <select id="foodId">
+        <option value="">Loading food items...</option>
+    </select>
+
+    <button type="button" id="loadButton">
+        Load Food Details
+    </button>
+
+    <p id="loadMessage" class="status" role="status" aria-live="polite"></p>
+
+    <form id="updateForm" hidden>
+        <label for="food_name">Food Name *</label>
+        <input type="text" id="food_name" maxlength="100" required>
+
+        <label for="category">Category *</label>
+        <select id="category" required>
+            <option value="">-- Select Category --</option>
+            <option value="Veg">Veg</option>
+            <option value="Non-Veg">Non-Veg</option>
+            <option value="Snacks">Snacks</option>
+            <option value="Desserts">Desserts</option>
+            <option value="Drinks">Drinks</option>
+        </select>
+
+        <label for="price">Price (₹) *</label>
+        <input type="number" id="price" min="0.01" step="0.01" required>
+
+        <label for="description">Description</label>
+        <textarea id="description" rows="4" maxlength="500"></textarea>
+
+        <label for="available">Availability *</label>
+        <select id="available" required>
+            <option value="1">Available</option>
+            <option value="0">Not Available</option>
+        </select>
+
+        <button type="submit" id="updateButton">
+            💗 Update Food
+        </button>
+    </form>
+
+    <p id="updateMessage" class="status" role="status" aria-live="polite"></p>
+
+    <a class="back-link" href="/list.html">View All Food Items →</a>
+</main>
+
+<footer>
+    <p>© 2026 ARCHANA FOOD ORDERING SYSTEM</p>
+    <p>Made with 💗 for food lovers</p>
+</footer>
+
+<script>
+    const foodId = document.getElementById("foodId");
+    const loadButton = document.getElementById("loadButton");
+    const updateForm = document.getElementById("updateForm");
+    const loadMessage = document.getElementById("loadMessage");
+    const updateMessage = document.getElementById("updateMessage");
+    const updateButton = document.getElementById("updateButton");
+
+    let selectedFood = null;
+
+    function showMessage(element, text, success = false) {
+        element.textContent = text;
+        element.style.color = success ? "green" : "#dc2626";
+    }
+
+    async function readResponse(response) {
+        const text = await response.text();
+
+        if (!text) return null;
+
+        try {
+            return JSON.parse(text);
+        } catch {
+            return text;
+        }
+    }
+
+    function getFoodId(food) {
+        return food.food_id ?? food.id ?? food.sno ?? food.foodId;
+    }
+
+    function getFoodObject(result) {
+        if (Array.isArray(result)) return result[0];
+
+        if (result && Array.isArray(result.foods)) {
+            return result.foods[0];
+        }
+
+        if (result && result.food) return result.food;
+
+        return result;
+    }
+
+    async function loadFoods() {
+        foodId.innerHTML = '<option value="">Loading food items...</option>';
+        foodId.disabled = true;
+
+        try {
+            const response = await fetch("/foods");
+            const result = await readResponse(response);
+
+            if (!response.ok) {
+                throw new Error(
+                    typeof result === "string"
+                        ? result
+                        : result?.message || "Unable to load food list."
+                );
+            }
+
+            const foods = Array.isArray(result)
+                ? result
+                : result?.foods;
+
+            if (!Array.isArray(foods)) {
+                throw new Error("Backend food list format sarigga ledu.");
+            }
+
+            foodId.innerHTML = '<option value="">-- Select Food --</option>';
+
+            foods.forEach(function(food) {
+                const id = getFoodId(food);
+
+                if (id == null) return;
+
+                const option = document.createElement("option");
+                option.value = String(id);
+                option.textContent =
+                    `${food.food_name ?? food.name ?? "Food"} (ID: ${id})`;
+
+                foodId.appendChild(option);
+            });
+
+            if (foodId.options.length === 1) {
+                showMessage(
+                    loadMessage,
+                    "Food items levu. Mundhu Insert page lo food add cheyyi."
+                );
+            } else {
+                showMessage(
+                    loadMessage,
+                    "Food list loaded. Oka food select cheyyi.",
+                    true
+                );
+            }
+
+        } catch (error) {
+            foodId.innerHTML = '<option value="">Unable to load foods</option>';
+            showMessage(loadMessage, "Error: " + error.message);
+        } finally {
+            foodId.disabled = false;
+        }
+    }
+
+    loadButton.addEventListener("click", async function() {
+        const id = foodId.value;
+
+        updateForm.hidden = true;
+        selectedFood = null;
+        showMessage(updateMessage, "");
+
+        if (!id) {
+            showMessage(loadMessage, "Please select a food item.");
+            return;
+        }
+
+        loadButton.disabled = true;
+        loadButton.textContent = "Loading...";
+
+        try {
+            const response = await fetch(
+                "/foods/" + encodeURIComponent(id)
+            );
+
+            const result = await readResponse(response);
+
+            if (!response.ok) {
+                throw new Error(
+                    typeof result === "string"
+                        ? result
+                        : result?.message || "Food details could not be loaded."
+                );
+            }
+
+            const food = getFoodObject(result);
+
+            if (!food || typeof food !== "object") {
+                throw new Error("Selected food details dorakaledu.");
+            }
+
+            selectedFood = food;
+
+            document.getElementById("food_name").value =
+                food.food_name ?? food.name ?? "";
+
+            document.getElementById("category").value =
+                food.category ?? "";
+
+            document.getElementById("price").value =
+                food.price ?? "";
+
+            document.getElementById("description").value =
+                food.description ?? "";
+
+            document.getElementById("available").value =
+                String(Number(food.available ?? 1) === 0 ? 0 : 1);
+
+            updateForm.hidden = false;
+
+            showMessage(
+                loadMessage,
+                "Food details loaded! Ippudu details edit cheyyachu.",
+                true
+            );
+
+        } catch (error) {
+            showMessage(loadMessage, "Load Error: " + error.message);
+        } finally {
+            loadButton.disabled = false;
+            loadButton.textContent = "Load Food Details";
+        }
+    });
+
+    updateForm.addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const id = foodId.value;
+
+        if (!id || !selectedFood) {
+            showMessage(updateMessage, "Mundhu food select chesi details load cheyyi.");
+            return;
+        }
+
+        const name = document.getElementById("food_name").value.trim();
+        const category = document.getElementById("category").value;
+        const price = Number(document.getElementById("price").value);
+        const description = document.getElementById("description").value.trim();
+        const available = Number(document.getElementById("available").value);
+
+        if (!name || !category || !Number.isFinite(price) || price <= 0) {
+            showMessage(updateMessage, "Valid food name, category, price enter cheyyi.");
+            return;
+        }
+
+        const data = {
+            food_name: name,
+            category: category,
+            price: price,
+            description: description,
+            available: available
+        };
+
+        updateButton.disabled = true;
+        updateButton.textContent = "Updating...";
+
+        try {
+            const response = await fetch(
+                "/foods/" + encodeURIComponent(id),
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                }
+            );
+
+            const result = await readResponse(response);
+
+            if (!response.ok) {
+                throw new Error(
+                    typeof result === "string"
+                        ? result
+                        : result?.message || "Update failed."
+                );
+            }
+
+            showMessage(
+                updateMessage,
+                typeof result === "string"
+                    ? result
+                    : result?.message || "Food updated successfully!",
+                true
+            );
+
+            await loadFoods();
+            foodId.value = id;
+
+            // Update ayina food details malli load chestundi
+            loadButton.click();
+
+        } catch (error) {
+            showMessage(updateMessage, "Update failed: " + error.message);
+        } finally {
+            updateButton.disabled = false;
+            updateButton.textContent = "💗 Update Food";
+        }
+    });
+
+    loadFoods();
+</script>
+
+</body>
+</html>
